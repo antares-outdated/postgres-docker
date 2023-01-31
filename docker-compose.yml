@@ -1,0 +1,26 @@
+
+version: "3"
+services:
+  postgres:
+    image: postgres:13.3
+    ports: 
+      - 5433:5432
+    networks:
+      - postgres
+    env_file:
+      - .env
+    volumes:
+      - /data/postgres:/data/postgres
+ 
+  nestjs-api:
+    image: nestjs-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - postgres
+ 
+networks:
+  postgres:
+    driver: bridge
